@@ -18,4 +18,9 @@ function change_gnome_shell_wallpaper {
 
 # Main
 wallpaper=$(get_random_wallpaper)
+if [[ -z "$wallpaper" ]]; then
+	echo "Error: No wallpaper found at \"$WALLPAPERS_FOLDERS\". Exiting."
+	exit 1
+fi
+
 change_gnome_shell_wallpaper $wallpaper
