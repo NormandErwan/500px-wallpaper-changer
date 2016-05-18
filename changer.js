@@ -6,6 +6,26 @@ var fs = require('fs'),
 	shell = require('shelljs'),
 	configuration = require('./configuration');
 
+var changer = module.exports;
+
+changer.changeWallpaper = function() {
+	var wallpapers = getWallpapers();
+	if (wallpapers.length < 1) {
+		console.error(chalk.red('Error: No wallpaper found at "' + configuration.WALLPAPERS_FOLDERS + '". Exiting.'));
+		process.exit(1);
+	}
+
+	getNewRandomWallpaper(wallpapers, function (err, randomWallpaperFile) {
+		if (err) {
+			console.error(chalk.red('Error: No new wallpaper available at "' + configuration.WALLPAPERS_FOLDERS + 
+			'". Exiting.'));
+			process.exit(1);
+		}
+
+		changeGnomeShellWallpaper(randomWallpaperFile);
+	});
+}
+
 function getWallpapers() {
 	var files = fs.readdirSync(configuration.WALLPAPERS_FOLDERS);
 
@@ -44,24 +64,3 @@ function changeGnomeShellWallpaper(wallpaper) {
 	shell.exec('gsettings set org.gnome.desktop.background picture-uri file://' + wallpaper);
 	shell.exec('gsettings set org.gnome.desktop.background picture-options ' + configuration.MODE);
 }
-
-module.exports = {
-	changeWallpaper: function() {
-		var wallpapers = getWallpapers();
-		if (wallpapers.length < 1) {
-			console.error(chalk.red('Error: No wallpaper found at "' + configuration.WALLPAPERS_FOLDERS + 
-				'". Exiting.'));
-			process.exit(1);
-		}
-
-		getNewRandomWallpaper(wallpapers, function (err, randomWallpaperFile) {
-			if (err) {
-				console.error(chalk.red('Error: No new wallpaper avaiable at "' + configuration.WALLPAPERS_FOLDERS + 
-				'". Exiting.'));
-				process.exit(1);
-			}
-
-			changeGnomeShellWallpaper(randomWallpaperFile);
-		});
-	}
-};
