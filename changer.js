@@ -60,7 +60,7 @@ function getGnomeShellWallpaper() {
 	return wallpaper;
 }
 
-function changeGnomeShellWallpaper(wallpaper) {
-	shell.exec('gsettings set org.gnome.desktop.background picture-uri file://' + wallpaper);
+function changeGnomeShellWallpaper(wallpaperFile) {
+	shell.exec('gsettings set org.gnome.desktop.background picture-uri file://' + wallpaperFile);
 	shell.exec('gsettings set org.gnome.desktop.background picture-options ' + configuration.MODE);
 }
