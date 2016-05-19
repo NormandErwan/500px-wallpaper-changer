@@ -12,18 +12,21 @@ changer.changeWallpaper = function() {
 	var wallpapers = getWallpapers();
 	if (wallpapers.length < 1) {
 		console.error(chalk.red('Error: No wallpaper found at "' + configuration.WALLPAPERS_FOLDERS + '". Exiting.'));
-		return;
+		return 1;
 	}
 
-	getNewRandomWallpaper(wallpapers, function (err, randomWallpaperFile) {
+	var r = getNewRandomWallpaper(wallpapers, function (err, randomWallpaperFile) {
 		if (err) {
 			console.error(chalk.red('Error: No new wallpaper available at "' + configuration.WALLPAPERS_FOLDERS + 
 			'". Exiting.'));
-			return;
+			return 1;
 		}
 
 		changeGnomeShellWallpaper(randomWallpaperFile);
+
+		return 0;
 	});
+	return r;
 }
 
 function getWallpapers() {
@@ -47,12 +50,13 @@ function getNewRandomWallpaper(wallpapers, callback) {
 	} while (currentWallpaper == randomWallpaper || wallpapers.length < 2);
 
 	if (currentWallpaper == randomWallpaper && wallpapers.length < 2) {
-		callback('No new wallpaper', randomWallpaperFile);
-		return;
+		var r = callback('No new wallpaper', randomWallpaperFile);
+		return r;
 	};
 	
 	var randomWallpaperFile = configuration.WALLPAPERS_FOLDERS + randomWallpaper;
-	callback(null, randomWallpaperFile);
+	var r = callback(null, randomWallpaperFile);
+	return r;
 }
 
 function getGnomeShellWallpaper() {

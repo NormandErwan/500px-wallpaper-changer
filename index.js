@@ -2,4 +2,7 @@
 
 var changer = require('./changer');
 
-changer.changeWallpaper();
+var r = changer.changeWallpaper();
+if (r != 0) {
+	process.exit(r);
+}
