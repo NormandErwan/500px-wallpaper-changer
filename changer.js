@@ -50,13 +50,11 @@ function getNewRandomWallpaper(wallpapers, callback) {
 	} while (currentWallpaper == randomWallpaper || wallpapers.length < 2);
 
 	if (currentWallpaper == randomWallpaper && wallpapers.length < 2) {
-		var r = callback('No new wallpaper', randomWallpaperFile);
-		return r;
+		return callback('No new wallpaper', randomWallpaperFile);
 	};
 	
 	var randomWallpaperFile = configuration.WALLPAPERS_FOLDERS + randomWallpaper;
-	var r = callback(null, randomWallpaperFile);
-	return r;
+	return callback(null, randomWallpaperFile);
 }
 
 function getGnomeShellWallpaper() {
