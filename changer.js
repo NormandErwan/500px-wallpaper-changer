@@ -47,9 +47,9 @@ function getNewRandomWallpaper(wallpapers, callback) {
 
 	do {
 		randomWallpaper = wallpapers[Math.floor(Math.random()*wallpapers.length)];
-	} while (currentWallpaper == randomWallpaper || wallpapers.length < 2);
+	} while (currentWallpaper === randomWallpaper || wallpapers.length < 2);
 
-	if (currentWallpaper == randomWallpaper && wallpapers.length < 2) {
+	if (currentWallpaper === randomWallpaper && wallpapers.length < 2) {
 		return callback('No new wallpaper', randomWallpaperFile);
 	};
 	
